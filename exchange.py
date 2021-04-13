@@ -38,20 +38,6 @@ class Exchange:
         self.traderMap = {} # Hashmap of traders connected with trader id as key
         
     
-    def show_order(self):
-        print("# of current buy orders: ", len(self.orderBuy))
-        print(*self.orderBuy, sep = "\n")
-        print("Buy prices:____________________________", *self.buyPrices, sep = ", ")
-        print("------------------------------------------------")
-        print("# of current sell orders: ", len(self.orderSell))
-        print(*self.orderSell, sep = "\n")
-        print("Sell prices:___________________________", *self.sellPrices, sep = ", ")
-        print("------------------------------------------------")
-        print("# of total order: ", len(self.orderMap))
-        print("------------------------------------------------")
-        print("\n")
-        
-    
     def connectToTrader(self, trader):
        self.traderMap[trader.id] = trader
        
@@ -204,41 +190,4 @@ class Exchange:
         
         return(cancelStatus)
     
-         
- 
-############################################## Small test ###############################################
-
-if __name__ == '__main__':
-    
-    
-    e = Exchange()
-
-    # Set up trader and connect to exchange
-    trader1 = Trader(1).connectToExchange(e)
-    trader2 = Trader(2).connectToExchange(e)
-    
-    
-    # e.orderAdd(orderReq1)
-
-        
-    trader1.OrderAdd("buy", 23.01, 30, e)
-    trader1.OrderAdd("sell", 25.0, 20, e)
-    trader2.OrderAdd("buy", 24.02, 10, e)
-    
-    e.show_order()
-    trader2.OrderAdd("buy", 25.0, 20, e)
-    
-    
-    # trader2.OrderAdd("sell", 24, 10, e)
-    
-
-    # recent_order = trader2.standing_orders[list(trader2.standing_orders)[2]]
-    
-    e.show_order()
-    # assertEqual(self.e.buyPrices, [23.01])
-    
-    oid = list(trader1.standing_orders)[0]
-    trader1.OrderCancel(oid, 20, e)
-    e.show_order()
-
         
