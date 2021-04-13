@@ -30,7 +30,7 @@ A log is automatically generated for the Exchange for all messages it sent out.
 - add order - O(n)
 - cancel order - O(n)
 
-To add an order,
+To add an order, the **Exchange** needs to
 * check whether a trade can be made - O(1) as it just compares the price of the order with the highest buy price or lower sell price on the orderbook. 
 * process trade if exist - O(n) 
   * O(1) to remove a existing sell order as the costly operation is to delete price which in this case it is at begining of a list, thus O(1), O(1) to delete from orderId hashmap and linkedlist for sell order
@@ -39,7 +39,7 @@ To add an order,
   * O(log(n)) to find where to add price and orderId, O(n) to add price to a list, O(1) to add orderId to double-linked list, O(1) to add order to hashmap or oderId.
 
 
-To cancel an order, the exchange needs to 
+To cancel an order, the **Exchange** needs to 
 * find the order by orderId - O(1) to find item by key in dict
 * edit its quanity or remove it form orderbook - O(n) as the dominant case of deletion is O(n).
   * O(1) to edit quanity of an order only
@@ -50,15 +50,7 @@ To cancel an order, the exchange needs to
 Inspecting the exchanges transaction log are there any data properties which can be exploited to store the data more efficiently? There is no need for an implementation here, just describe an idea.
 
 
-
 ## Additional details
 
-- _Message Exchange Mechanism _ - After instanciation, a **Trader** instance call method _connectToExchange_ to setup a connection to the **Exchange** object. The **Exchange** object contain _traderMap_ a hashmap of traders with traderId as key. To send a message to a **Trader** instance, the **Exchange** object calls the trader reference and pass the message through _accept_msg_ method of a **Trader** instance.
-calls.
-- _Order Acknowledgement and fill message - When **Trader** instance calls its _OrderAdd_ method, it triggers the _orderAdd_ method on the **Exchange** side. The **Exchange** tries to fill an order and then add the order (or its remaining part) to the orderbook. The sending of order acknowledgement occur in the order adding stage and sending of fill message occur in the order processing stage. To make sure a **Trader** instance receive an order acknowledgement before its fill message (if the order is filled), the **Trader** instance stores fill messages in a buffer dictionary _fill_waiting_ if the acknowledgement of this order has not been received. 
-- _Limit order_ - A **Trader** instance is limited to send an order (a call of _OrderAdd_ or _OrderCancel_ method) up to 100 times/sec. This is enforced by keeping timestamp of the last order and a count that adds when orders are placed within the same second. No order passes through when the count reaches 100.  
-
-When the trader pass an order to the exchange : the method ‘orderAdd’ is triggered on the exchange side. The exchange object : generate a orderId, process the order and and return an ‘orderedAcknowledgementMsg’ instance class to the trader. The trader book the order (with the order id) into ‘standing_order’ map.  
-
-If the ordered is at least partially filled. Some OrderAck are received by the Trader via the accept method before the booking. In that case the msg is stored temporarily in a buffer dictionary (‘name***’). After booking the trader check the buffer and process the msg if any. 
-
+- _Message Exchange Mechanism _ - After instanciation, a **Trader** instance must call method _connectToExchange_ to setup a connection to the **Exchange** object. The **Exchange** object contains _traderMap_ a hashmap of **Trader** references with traderId as key. To send a message to a **Trader** instance, the **Exchange** object calls the **Trader** reference and pass the message through the _accept_msg_ method of the **Trader** instance.
+- _Order Acknowledgement and fill message - When **Trader** instance calls its _OrderAdd_ method, it triggers the _orderAdd_ method on the **Exchange** side which will send order acknowledgement and fill message to the **Trader** instance. The **Trader** instance stores fill messages received in a buffer dictionary _fill_waiting_ if the acknowledgement of this order has not been yet received. After the receiving the order acknowledge, then the **Trader** instance process the fill message and update its orderbook. 
