@@ -21,6 +21,7 @@ A log is automatically generated for the Exchange for all messages it sent out.
 - Order.py - Order class contain Order object and message objects
 - config.py - configure log for exchange
 - unitTest_ExchangeBook.py, unitTest_traderBook.py - unit tests for exchange's orderbook and trader's orderbook
+- unitTest_ExchangeBook.ipynb - a duplicate of unitTest_ExchangeBook.py in jupyter notebook to show that the orderbook is working and passing tests. 
 
 ## Question 1. Asymptotic complexity of operations
 - add order - O(log(n))
