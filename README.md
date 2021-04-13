@@ -26,7 +26,7 @@ A log is automatically generated for the Exchange for all messages it sent out.
   * unitTest_ExchangeBook.ipynb - a duplicate of unitTest_ExchangeBook.py in jupyter notebook to show that the orderbook is working and passing tests. 
  
 
-## Question 1. Asymptotic complexity of operations
+## Asymptotic complexity of operations
 - add order - O(n)
 - cancel order - O(n)
 
@@ -45,9 +45,6 @@ To cancel an order, the **Exchange** needs to
   * O(1) to edit quanity of an order only
   * O(log(n)) to use bisect find item by price, O(n) to delete the price in a list, O(1) to delete double-linked list of orderId, O(1) to delete orderId in hashmap in average case and O(n) in worst case. 
 
-## Question 2. Effcient storage
-
-Inspecting the exchanges transaction log are there any data properties which can be exploited to store the data more efficiently? There is no need for an implementation here, just describe an idea.
 
 
 ## Additional details
