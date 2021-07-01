@@ -1,6 +1,6 @@
 # Limit Orderbook
 ## Summary
-Implementation of a limit orderbook. The two main classes are Trader and Exchange.
+Python implementation of a limit orderbook. There two main classes: Trader and Exchange.
 
 A instance of the **Trader** class contain _id_, _standing_order_: a hashmap of standing orders (orderId as key), and _log_: a list of all messages received from Exchange. A Trader instance can acess method
 1. OrderAdd: place an order by specify side [buy or sell], price, qty
